@@ -16,5 +16,8 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
+         // note you must disable the base rule as it can report incorrect errors
+        "quotes": "off",
+        "@typescript-eslint/quotes": ["error", "single", { "allowTemplateLiterals": true }]
     }
 }
