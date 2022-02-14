@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
-import { TwitchBot } from './twitch-bot';
+import { TmiService } from './services/tmi.service';
 
 dotenv.config();
 
-const bot = new TwitchBot();
+const bot = new TmiService();
 bot.connect();
