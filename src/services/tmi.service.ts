@@ -89,22 +89,24 @@ export class TmiService {
 		const command = message.trim();
 
 		if (command.startsWith('!sr')) {
-			const splittedMessage = command.match(/^!(\w+)\s(.*?)$/);
-			if (splittedMessage) {
-				// Song Request for Songlist or youtube
-				console.log('');
-				console.log('');
-				console.log('Anything with request');
-				console.log('Is YouTube', SongRequests.isYouTube(splittedMessage[2]));
-				console.log(
-					'YT ID',
-					SongRequests.getYouTubeVideoId(splittedMessage[2])
-				);
-				console.log('Is Songlist', SongRequests.isSonglist(command));
-				console.log(
-					'SL Params',
-					SongRequests.getSonglistRequestParameter(command)
-				);
+			console.log(command);
+			const splittedCommand = command.match(/^!(\w+)\s(.*?)$/);
+			if (splittedCommand) {
+
+				let requestCommand = SongRequests.getYouTubeVideoId(splittedCommand[2]);
+				if (requestCommand) {
+					// Handle YT based request
+					console.log('YT ID', requestCommand[1]);
+				}
+
+				requestCommand = SongRequests.getSonglistRequestParameter(splittedCommand[2]);
+				if(requestCommand) {
+					// Handle songlist based request
+					console.log('SL Params', requestCommand[1]);
+				}
+
+				// check request in database (song list)
+
 				console.log('');
 				console.log('');
 			}
