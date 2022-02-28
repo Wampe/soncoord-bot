@@ -2,7 +2,7 @@
   "name": "soncoord-bot",
   "version": "0.0.1",
   "description": "Soncoord Twitch Chatbot",
-  "main": "dist/index.js",
+  "main": "src/index.ts",
   "scripts": {
     "watch": "node_modules\\.bin\\tsc -w",
     "build": "node_modules\\.bin\\tsc",
@@ -36,6 +36,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "axios": "^0.26.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-session": "^1.17.2",

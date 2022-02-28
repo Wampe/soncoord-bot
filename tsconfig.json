@@ -7,7 +7,7 @@
     "importHelpers": true,
     "target": "es6",
     "moduleResolution": "node",
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "dist"
   },
   "lib": ["es2015"]

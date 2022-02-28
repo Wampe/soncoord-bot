@@ -1,5 +1,6 @@
 import { Client, ChatUserstate } from 'tmi.js';
 import { SongRequests } from '../utils/song-requests';
+import env from '../environments';
 
 export class TmiService {
 	private readonly client: Client;
@@ -11,13 +12,13 @@ export class TmiService {
 				secure: true,
 			},
 			options: {
-				clientId: process.env?.TWITCH_CLIENT_ID,
+				clientId: env.TWITCH_CLIENT_ID,
 			},
 			identity: {
-				username: process.env?.TWITCH_USERNAME,
-				password: process.env?.TWITCH_OAUTH,
+				username: env.TWITCH_USERNAME,
+				password: env.TWITCH_OAUTH,
 			},
-			channels: process.env.TWITCH_CHANNELS?.split(','),
+			channels: env.TWITCH_CHANNELS?.split(','),
 		});
 	}
 
@@ -65,15 +66,7 @@ export class TmiService {
 			}
 		);
 
-		this.client.on(
-			'message',
-			(
-				channel: string,
-				context: ChatUserstate,
-				message: string,
-				self: boolean
-			) => this.onMessage(channel, context, message, self)
-		);
+		this.client.on('message', this.onMessage);
 	}
 
 	private onMessage(
@@ -100,7 +93,7 @@ export class TmiService {
 				}
 
 				requestCommand = SongRequests.getSonglistRequestParameter(splittedCommand[2]);
-				if(requestCommand) {
+				if (requestCommand) {
 					// Handle songlist based request
 					console.log('SL Params', requestCommand[1]);
 				}
