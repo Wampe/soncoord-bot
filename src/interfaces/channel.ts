@@ -6,9 +6,9 @@ import { Session } from './session';
 import { Song } from './song';
 
 export interface Channel extends ChannelBase {
-	settings: ChannelSettings,
-	priorities: Array<PriorityRequest>;
-	sessions: Array<Session>;
-	songs: Array<Song>;
-	categories: Array<Category>;
+    settings: ChannelSettings,
+    priorities: Array<PriorityRequest>;
+    sessions: Array<Session>;
+    songs: Array<Song>;
+    categories: Array<Category>;
 }

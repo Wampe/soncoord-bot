@@ -2,15 +2,15 @@ import { Response, Request, NextFunction, Router } from 'express';
 import { ControllerBase } from './controller-base';
 
 export class RootController extends ControllerBase {
-	private router: Router;
+    private router: Router;
     controllerPath: string;
 
-	constructor() {
-		super();
+    constructor() {
+        super();
         this.controllerPath = '/';
-		this.router = Router();
+        this.router = Router();
 
-		this.router.get('/', (request: Request, response: Response, next: NextFunction) => {
+        this.router.get('/', (request: Request, response: Response, next: NextFunction) => {
             if (request.session) {
                 response.send('Welcome');
             } else {
@@ -18,9 +18,9 @@ export class RootController extends ControllerBase {
                 response.send('No session given!');
             }
         });
-	}
+    }
 
-	getRouter(): Router {
-		return this.router;
-	}
+    getRouter(): Router {
+        return this.router;
+    }
 }

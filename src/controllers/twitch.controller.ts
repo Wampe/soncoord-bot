@@ -3,15 +3,15 @@ import passport from 'passport';
 import { ControllerBase } from './controller-base';
 
 export class TwitchController extends ControllerBase {
-	private router: Router;
-	controllerPath: string;
-	
-	constructor() {
-		super();
-		this.controllerPath = '/api/auth/twitch';
-		this.router = Router();		
+    private router: Router;
+    controllerPath: string;
 
-		this.router.get(
+    constructor() {
+        super();
+        this.controllerPath = '/api/auth/twitch';
+        this.router = Router();
+
+        this.router.get(
             '/',
             passport.authenticate('twitch', { scope: 'user:read:email' })
         );
@@ -37,12 +37,12 @@ export class TwitchController extends ControllerBase {
             })
         );
 
-		this.router.get('/failed', (request: Request, response: Response) => {
-			response.send('Authorization with Twitch failed');
+        this.router.get('/failed', (request: Request, response: Response) => {
+            response.send('Authorization with Twitch failed');
         });
-	}
+    }
 
-	getRouter(): Router {
-		return this.router;
-	}
+    getRouter(): Router {
+        return this.router;
+    }
 }

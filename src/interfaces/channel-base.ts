@@ -1,4 +1,4 @@
 export interface ChannelBase {
-	login: string;
-	displayName: string;
+    login: string;
+    displayName: string;
 }

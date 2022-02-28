@@ -10,35 +10,35 @@ import { TwitchService } from './services/twitch.service';
 import { OAuthStrategies } from './utils/auth-strategies';
 
 export class App {
-	private readonly app: Application
+    private readonly app: Application
 
-	constructor(controller: Array<Controller>) {
-		this.app = express();
+    constructor(controller: Array<Controller>) {
+        this.app = express();
 
-		OAuth2Strategy.prototype.userProfile = this.assignUserProfileSource;
-		this.initControllers(controller);
-		this.initPassport();
-	}
+        OAuth2Strategy.prototype.userProfile = this.assignUserProfileSource;
+        this.initControllers(controller);
+        this.initPassport();
+    }
 
-	getApp(): Application {
-		return this.app;
-	}
+    getApp(): Application {
+        return this.app;
+    }
 
-	private async assignUserProfileSource(
-		accessToken: string,
-		done: (err?: Error | null | undefined, profile?: TwitchUser) => void
-	): Promise<void> {
+    private async assignUserProfileSource(
+        accessToken: string,
+        done: (err?: Error | null | undefined, profile?: TwitchUser) => void
+    ): Promise<void> {
         const authService = new TwitchService();
 
         try {
             const user = await authService.getUser(accessToken);
-            done(null, user);    
+            done(null, user);
         } catch (error: unknown) {
             done(error as Error);
-        }        
-	}
+        }
+    }
 
-	private initControllers(controller: Array<Controller>): void {
+    private initControllers(controller: Array<Controller>): void {
         // ToDo: Handle environment of development and production
         // if (app.get('env') === 'production') {
         //     app.set('trust proxy', 1) // trust first proxy
@@ -50,14 +50,14 @@ export class App {
         //     maxAge: 600000 
         // }
         // }
-		this.app.use(
-            session({ 
-				secret: env.SERVER_SESSION_SECRET,
-				resave: false,
-				saveUninitialized: false
-			})
+        this.app.use(
+            session({
+                secret: env.SERVER_SESSION_SECRET,
+                resave: false,
+                saveUninitialized: false
+            })
         );
-            
+
         this.app.use(passport.initialize());
         this.app.use(passport.session());
 
@@ -66,21 +66,21 @@ export class App {
                 this.app.use(entity.controllerPath, entity.getRouter());
             });
         }
-	}
+    }
 
-	private initPassport(): void {
-		passport.serializeUser<Express.User>(
-			(
-				user: Express.User,
-				done: (err: unknown, id?: Express.User) => void
-			) => done(null, user)
+    private initPassport(): void {
+        passport.serializeUser<Express.User>(
+            (
+                user: Express.User,
+                done: (err: unknown, id?: Express.User) => void
+            ) => done(null, user)
         );
 
         passport.deserializeUser<Express.User>(
-			(
-				id: Express.User,
-				done: (err: unknown, user?: false | Express.User | null | undefined) => void
-			) => done(null, id)
+            (
+                id: Express.User,
+                done: (err: unknown, user?: false | Express.User | null | undefined) => void
+            ) => done(null, id)
         );
 
         passport.use(
@@ -88,11 +88,11 @@ export class App {
             new OAuth2Strategy(OAuthStrategies.twitchStrategyOptions, this.UserVerifyCallback)
         );
 
-		passport.use(
+        passport.use(
             'twitch-bot',
             new OAuth2Strategy(OAuthStrategies.twitchBotStrategyOptions, this.BotVerifyCallback)
         );
-	}
+    }
 
     private UserVerifyCallback(
         accessToken: string,
